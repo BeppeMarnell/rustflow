@@ -4,6 +4,8 @@ Set `DATABASE_URL` for all binaries. `API_BIND` defaults to `127.0.0.1:3000`. `W
 
 For local development, start Postgres with `docker compose up -d postgres`, load `.env.example` values into the shell, then run `cargo run --bin api` and `cargo run --bin worker` in separate terminals. Run `scripts/local-bootstrap.sh TENANT_NAME` to create a tenant and separate application, RAGFlow configuration, and Prometheus keys. It stores them in ignored `.local/api-key`, `.local/rag-config-key`, and `.local/ops-api-key`. The database stores only their digests. Protect these local files. Issue the `rag:configure` key only after verifying that its tenant owns the intended RAGFlow datasets.
 
+To use the local workbench without a login screen, run `cd web && npm ci && npm run dev` after the API and worker are ready. It binds to `127.0.0.1:5173` and proxies `/v1` through a local key file. `CHATFLOW_API_KEY_FILE` and `CHATFLOW_API_URL` override the default `.local/api-key` and `http://127.0.0.1:3000`. Keep the UI loopback-only; it is a development tool, not a public authentication boundary. See [Workbench usage](../web/README.md).
+
 ## Containerized local API and worker
 
 For a complete local environment from empty volumes, run:

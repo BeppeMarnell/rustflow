@@ -25,6 +25,9 @@ use serde_json::{json, Value};
 use sqlx::{postgres::PgPoolOptions, PgPool, Row};
 use uuid::Uuid;
 
+#[path = "api/workbench.rs"]
+mod workbench;
+
 #[derive(Debug)]
 struct ApiError(StatusCode, String);
 
@@ -1292,9 +1295,22 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .route("/v1/runs/{run_id}/timeline", get(run_timeline))
         .route("/v1/runs/{run_id}/cancel", post(cancel_run))
         .route("/v1/runs/{run_id}/events", get(stream_events))
+        .route("/v1/conversations", get(workbench::list_conversations))
+        .route(
+            "/v1/conversations/{conversation_id}/runs",
+            get(workbench::list_conversation_runs),
+        )
         .route(
             "/v1/conversations/{conversation_id}/messages",
             get(messages),
+        )
+        .route(
+            "/v1/conversations/{conversation_id}/notes",
+            get(workbench::list_notes).post(workbench::create_note),
+        )
+        .route(
+            "/v1/conversations/{conversation_id}/notes/{note_id}",
+            axum::routing::patch(workbench::update_note).delete(workbench::delete_note),
         )
         .route(
             "/v1/conversations/{conversation_id}/variables",
