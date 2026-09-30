@@ -1,0 +1,5 @@
+Chatflow RAGFlow smoke-test document.
+
+The project verification phrase is "cedar moon 417". This phrase is used to
+check that RAGFlow indexed this document and that rag.retrieve returns its
+dataset, document, and chunk identifiers.

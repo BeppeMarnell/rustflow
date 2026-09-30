@@ -1,0 +1,29 @@
+{
+  "checked_at_utc": "2026-09-29T09:11:30Z",
+  "provider_base_url": "https://llmrouterv2.aevai-health.com/openai",
+  "test_model": "gpt-4o-mini",
+  "model_list_http_status": 403,
+  "completion_http_status": 403,
+  "edge_error_code": 1010,
+  "rechecked_at_utc": "2026-09-29T09:23:42Z",
+  "model_list_recheck_http_status": 200,
+  "listed_model_count": 102,
+  "selected_model": "bedrock/eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+  "selected_model_is_inference_profile": true,
+  "selected_model_completion_http_status": 200,
+  "selected_model_streaming_http_status": 200,
+  "selected_model_stream_reply": "OK",
+  "selected_model_stream_usage": {
+    "prompt_tokens": 12,
+    "completion_tokens": 4,
+    "total_tokens": 16
+  },
+  "worker_configured_at_utc": "2026-09-29T09:28:38Z",
+  "worker_selected_model": "bedrock/eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+  "restarted_worker_mock_rag_run_id": "a4953936-6a71-4ea4-960d-83a6f3db01c3",
+  "restarted_worker_mock_rag_run_status": "succeeded",
+  "local_vault_secret_write_http_status": 200,
+  "credential_registered": false,
+  "live_chatflow_run_verified": false,
+  "notes": "No provider key is stored in this record. The router initially returned edge error 1010 without an explicit user agent. A transparent chatflow/0.1 user agent reached the router. The listed on-demand Haiku model returned an inference-profile validation error; the EU Haiku inference-profile ID succeeded. The existing local application key lacks credentials:write, and direct database registration was rejected by automatic approval review."
+}

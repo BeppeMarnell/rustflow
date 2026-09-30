@@ -1,0 +1,12 @@
+{
+  "workload": "basic-chat flow with mock model",
+  "environment": "local PostgreSQL 17, one API process, two worker processes with concurrency 4 each",
+  "requests": 100,
+  "target_concurrency": 20,
+  "queue_time_p95_ms": 317,
+  "first_token_latency_p95_ms": 330,
+  "completion_latency_p95_ms": 482,
+  "error_rate": 0.0,
+  "errors": 0,
+  "provider_throttles": 0
+}

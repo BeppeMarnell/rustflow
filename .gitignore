@@ -1,0 +1,6 @@
+/target/
+/.env
+/.local/
+/third_party/ragflow/docker/.env
+/third_party/ragflow/docker/ragflow-logs/
+.DS_Store

@@ -1,0 +1,25 @@
+{
+  "checked_at_utc": "2026-09-29T13:57:29.204977+00:00",
+  "run_id": "fc286805-398c-42e0-9620-0e7c54a9ce48",
+  "flow_version_id": "e017a604-6885-4ae3-9480-dbf672045725",
+  "status": "succeeded",
+  "runtime": "Docker Compose app profile",
+  "model_id": "bedrock/eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+  "reply_contains_verification_phrase": true,
+  "ragflow_source_ids": [
+    {
+      "chunk_id": "6bbb0c6c6b9c9426",
+      "dataset_id": "38fe6cdebbd811f1a98a2b4634a80fdc",
+      "document_id": "4506e088bbd811f1a98a2b4634a80fdc"
+    }
+  ],
+  "reported_usage": {
+    "input_tokens": 166,
+    "output_tokens": 83
+  },
+  "admission_rates_are_synthetic": true,
+  "api_readiness": "ready",
+  "container_uid": 10001,
+  "ragflow_secret_mount_readable": true,
+  "collector_run_metrics_present": true
+}

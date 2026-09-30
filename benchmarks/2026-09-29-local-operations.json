@@ -1,0 +1,22 @@
+{
+  "checked_at_utc": "2026-09-29T07:54:01Z",
+  "scope": "local development stack",
+  "chatflow_ready_http_status": 200,
+  "tei_health_http_status": 200,
+  "prometheus_ready_http_status": 200,
+  "grafana_health_http_status": 200,
+  "jaeger_root_http_status": 200,
+  "prometheus_scrape_targets": {
+    "chatflow-api": "up",
+    "otel-collector": "up"
+  },
+  "prometheus_alert_group": "chatflow",
+  "prometheus_alert_rule_count": 4,
+  "grafana_dashboard": "Chatflow operations",
+  "grafana_dashboard_uid": "chatflow-ops",
+  "model_cost_rechecked_at_utc": "2026-09-29T09:37:26Z",
+  "model_cost_alert_loaded": true,
+  "model_cost_panel_query": "chatflow_model_estimated_cost_usd_5m",
+  "model_cost_prices_configured": false,
+  "model_cost_metric_emitted": false
+}

@@ -1,0 +1,13 @@
+{
+  "checked_at_utc": "2026-09-29T07:18:07Z",
+  "ragflow_version": "v0.27.2",
+  "embedding_model": "BAAI/bge-small-en-v1.5@Builtin",
+  "dataset_id": "046b7370bb8011f1a98a2b4634a80fdc",
+  "document_id": "1b1f5870bb8011f1a98a2b4634a80fdc",
+  "chunk_id": "332ba4314d92d31f",
+  "document_state": "DONE",
+  "chunk_count": 1,
+  "retrieval_business_code": 0,
+  "verification_phrase_found": true,
+  "chatflow_run_verified": false
+}

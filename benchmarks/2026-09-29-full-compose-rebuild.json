@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-29",
+  "isolation": {
+    "ragflow_project": "chatflow-ragflow-rebuild",
+    "chatflow_project": "chatflow-full-rebuild",
+    "ports": "alternate loopback ports",
+    "volumes": "separate named volumes"
+  },
+  "checks": [
+    "official RAGFlow v0.27.2 started on empty MySQL, Elasticsearch, MinIO, and Redis volumes",
+    "RAGFlow admin API generated a fresh API key",
+    "RAGFlow created an embedding dataset, parsed a smoke document, and retrieved the verification phrase",
+    "Chatflow started on empty Postgres, Vault dev, Prometheus, and Grafana volumes",
+    "Chatflow migrations, tenant bootstrap, and tenant dataset assignment succeeded",
+    "mock and RAGFlow-backed Chatflow worker runs succeeded",
+    "both isolated Compose projects were reset with down -v and generated keys removed",
+    "scripts/full-compose.sh up recreated and verified both projects from empty volumes",
+    "original RAGFlow containers restarted on preserved volumes; original dataset retrieval succeeded",
+    "original Chatflow API readiness returned HTTP 200"
+  ],
+  "result": "passed",
+  "live_model": "not exercised in this reset check; Vault dev secrets require restoration after volume removal"
+}

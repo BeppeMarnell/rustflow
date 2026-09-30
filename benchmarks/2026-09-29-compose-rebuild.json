@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-29",
+  "project": "chatflow-rebuild-check",
+  "isolation": "separate Compose project, state directory, ports, and named volumes",
+  "sequence": [
+    "up on empty volumes: API readiness passed",
+    "verify: mock flow published and worker returned expected reply",
+    "reset: containers, network, Postgres/Prometheus/Grafana volumes, and generated Chatflow keys removed",
+    "up on newly created volumes: migrations and new tenant bootstrap passed",
+    "verify: second mock flow and worker reply passed"
+  ],
+  "observability": {
+    "prometheus_chatflow_api_target": "up",
+    "prometheus_otel_collector_target": "up"
+  },
+  "existing_project": {
+    "api_readiness_http_status": 200,
+    "ragflow_ping_http_status": 200
+  },
+  "scope": "Chatflow app and support Compose stack; RAGFlow's separate upstream volumes and onboarding were not reset"
+}

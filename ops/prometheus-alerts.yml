@@ -1,0 +1,32 @@
+groups:
+  - name: chatflow
+    interval: 30s
+    rules:
+      - alert: ChatflowRunBacklog
+        expr: chatflow_oldest_run_queue_seconds > 30
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Chatflow run queue has waited over 30 seconds"
+      - alert: ChatflowModelFailures
+        expr: chatflow_model_failures_5m > 5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Chatflow model calls are failing"
+      - alert: ChatflowProviderThrottling
+        expr: chatflow_provider_throttles_5m > 2
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Chatflow provider is throttling model calls"
+      - alert: ChatflowModelCost
+        expr: chatflow_model_estimated_cost_usd_5m > 10
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Estimated model cost exceeds $10 in five minutes"

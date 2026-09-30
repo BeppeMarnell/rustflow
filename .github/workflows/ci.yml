@@ -1,0 +1,32 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: chatflow
+          POSTGRES_PASSWORD: chatflow
+          POSTGRES_DB: chatflow
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U chatflow -d chatflow"
+          --health-interval 2s
+          --health-timeout 2s
+          --health-retries 15
+    env:
+      DATABASE_URL: postgres://chatflow:chatflow@localhost:5432/chatflow
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --all -- --check
+      - run: cargo test --all-targets --locked
+      - run: cargo clippy --locked --all-targets -- -D warnings

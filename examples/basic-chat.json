@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "flow_id": "11111111-1111-4111-8111-111111111111",
+  "inputs": { "message": "string" },
+  "outputs": { "reply": { "node": "reply", "output": "value" } },
+  "nodes": [
+    {
+      "id": "message", "type": "input", "config": { "name": "message" },
+      "bindings": {}, "retry": { "max_attempts": 0 }, "timeout_ms": 1000
+    },
+    {
+      "id": "prompt", "type": "prompt.render", "config": { "template": "Answer the user: {{text}}" },
+      "bindings": { "text": { "node": "message", "output": "value" } },
+      "retry": { "max_attempts": 0 }, "timeout_ms": 1000
+    },
+    {
+      "id": "model", "type": "llm.chat", "config": { "model_alias": "mock", "max_output_tokens": 512 },
+      "bindings": { "prompt": { "node": "prompt", "output": "value" } },
+      "retry": { "max_attempts": 1 }, "timeout_ms": 30000
+    },
+    {
+      "id": "reply", "type": "output", "config": {},
+      "bindings": { "value": { "node": "model", "output": "value" } },
+      "retry": { "max_attempts": 0 }, "timeout_ms": 1000
+    }
+  ],
+  "edges": [
+    { "from": { "node": "message", "output": "value" }, "to_node": "prompt", "to_input": "text" },
+    { "from": { "node": "prompt", "output": "value" }, "to_node": "model", "to_input": "prompt" },
+    { "from": { "node": "model", "output": "value" }, "to_node": "reply", "to_input": "value" }
+  ],
+  "limits": { "max_nodes": 16, "max_run_ms": 120000 }
+}

@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-29",
+  "platform": "macOS with Docker Desktop",
+  "source_copy": "/private/tmp/chatflow-portable-check",
+  "source_copy_inputs": "repository files including third_party/ragflow/docker/.env; excluded .local, root .env, target, and Docker volumes",
+  "checks": [
+    "RAGFlow and Chatflow Compose configuration validated from the relocated copy",
+    "full-compose.sh up created fresh RAGFlow storage and Chatflow Postgres volumes in isolated projects",
+    "RAGFlow generated an API key, indexed the smoke document, and retrieved its verification phrase",
+    "Chatflow created a tenant and completed mock and RAGFlow-backed runs",
+    "full-compose.sh reset removed the isolated projects and volumes",
+    "a separate Chatflow project built from the relocated copy reached RAGFlow through the shared named Docker network and completed mock and RAGFlow-backed runs",
+    "the separate Chatflow project's containers and volumes were removed",
+    "all Rust targets passed with a dedicated temporary Postgres test database"
+  ],
+  "result": "passed",
+  "limits": [
+    "a separate physical machine and native Linux Docker Engine were not exercised",
+    "uncached image pulls and crates.io downloads were not exercised independently because the host cache could be reused",
+    "live provider credentials were not part of the clean-copy check"
+  ]
+}

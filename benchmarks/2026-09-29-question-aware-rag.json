@@ -1,0 +1,17 @@
+{
+  "checked_at_utc": "2026-09-29T09:43:55Z",
+  "flow_id": "33333333-3333-4333-8333-333333333333",
+  "flow_version_id": "d4afc2b5-4894-458e-8ca7-dcdfc41a7b1c",
+  "run_id": "e7f31b97-1a10-4783-b6cc-9fde0629be5a",
+  "run_status": "succeeded",
+  "model_alias": "mock",
+  "prompt_contains_original_question": true,
+  "prompt_contains_ragflow_context": true,
+  "output_contains_verification_phrase": true,
+  "rag_sources_event_count": 1,
+  "source_ids": {
+    "dataset_id": "38fe6cdebbd811f1a98a2b4634a80fdc",
+    "document_id": "4506e088bbd811f1a98a2b4634a80fdc",
+    "chunk_id": "6bbb0c6c6b9c9426"
+  }
+}

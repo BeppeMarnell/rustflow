@@ -1,0 +1,22 @@
+{
+  "checked_at_utc": "2026-09-29T07:36:10Z",
+  "ragflow_version": "v0.27.2",
+  "dataset_name": "chatflow",
+  "dataset_id": "38fe6cdebbd811f1a98a2b4634a80fdc",
+  "permission": "me",
+  "embedding_model": "BAAI/bge-small-en-v1.5@Builtin",
+  "smoke_document_id": "4506e088bbd811f1a98a2b4634a80fdc",
+  "smoke_chunk_id": "6bbb0c6c6b9c9426",
+  "document_state": "DONE",
+  "retrieval_business_code": 0,
+  "verification_phrase_found": true,
+  "chatflow_run_verified": true,
+  "chatflow_run_checked_at_utc": "2026-09-29T07:51:57Z",
+  "chatflow_flow_id": "6a0c4518-341b-4e42-acbe-3b89fb40d1de",
+  "chatflow_flow_version_id": "f61cbc3d-f506-4762-9bcb-f1862dea55f3",
+  "chatflow_run_id": "da38bbf4-a7ba-4a09-abc0-706d40ca9f79",
+  "chatflow_run_status": "succeeded",
+  "chatflow_rag_sources_events": 1,
+  "chatflow_source_ids_verified": true,
+  "chatflow_output_verification_phrase_found": true
+}

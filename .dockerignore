@@ -1,0 +1,14 @@
+.git
+.github
+.local
+.env
+target
+benchmarks
+docs
+examples
+ops
+schemas
+scripts
+tests
+third_party
+*.log

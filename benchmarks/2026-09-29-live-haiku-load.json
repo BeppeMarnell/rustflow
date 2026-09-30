@@ -1,0 +1,15 @@
+{
+  "completion_latency_p95_ms": 3590,
+  "error_rate": 0.0,
+  "errors": 0,
+  "first_token_latency_p95_ms": 2829,
+  "provider_throttles": 0,
+  "queue_time_p95_ms": 173,
+  "requests": 3,
+  "target_concurrency": 2,
+  "checked_at_utc": "2026-09-29T10:24:07.571136+00:00",
+  "model_id": "bedrock/eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+  "flow_version_id": "e017a604-6885-4ae3-9480-dbf672045725",
+  "environment": "local Docker dependencies, host-run API and worker",
+  "admission_rates_are_synthetic": true
+}

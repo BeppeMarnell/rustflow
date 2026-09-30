@@ -1,0 +1,14 @@
+{
+  "flow_id": "33333333-3333-4333-8333-333333333333",
+  "mode": "live_ragflow_dry_run_mock_model",
+  "status": "succeeded",
+  "prompt_question_occurrences": 1,
+  "source_only_context_contains_question": false,
+  "source_only_context_contains_verification_phrase": true,
+  "source_ids": {
+    "chunk_id": "6bbb0c6c6b9c9426",
+    "dataset_id": "38fe6cdebbd811f1a98a2b4634a80fdc",
+    "document_id": "4506e088bbd811f1a98a2b4634a80fdc"
+  },
+  "reply_contains_verification_phrase": true
+}

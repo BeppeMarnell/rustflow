@@ -1,0 +1,28 @@
+{
+  "checked_at_utc": "2026-09-29T10:21:55.613487+00:00",
+  "flow_version_id": "e017a604-6885-4ae3-9480-dbf672045725",
+  "run_id": "6d04b08a-9982-46f4-a9a0-ce1da5fc7177",
+  "status": "succeeded",
+  "model_id": "bedrock/eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+  "ragflow_source_ids": [
+    {
+      "chunk_id": "6bbb0c6c6b9c9426",
+      "dataset_id": "38fe6cdebbd811f1a98a2b4634a80fdc",
+      "document_id": "4506e088bbd811f1a98a2b4634a80fdc"
+    }
+  ],
+  "prompt_question_occurrences": 1,
+  "source_only_context_contains_question": false,
+  "reply_contains_verification_phrase": true,
+  "reported_usage": {
+    "input_tokens": 166,
+    "output_tokens": 83
+  },
+  "local_test_admission_rates_usd_per_million": {
+    "input": 100,
+    "output": 100
+  },
+  "rates_are_provider_prices": false,
+  "provider_credential_registered_via_api": true,
+  "temporary_credential_write_key_revoked": true
+}

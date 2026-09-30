@@ -1,0 +1,642 @@
+{
+  "flow": {
+    "$defs": {
+      "Binding": {
+        "additionalProperties": false,
+        "properties": {
+          "node": {
+            "type": "string"
+          },
+          "output": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "node",
+          "output"
+        ],
+        "type": "object"
+      },
+      "ConditionGuard": {
+        "additionalProperties": false,
+        "properties": {
+          "equals": {
+            "type": "boolean"
+          },
+          "node": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "node",
+          "equals"
+        ],
+        "type": "object"
+      },
+      "EdgeDefinition": {
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "$ref": "#/$defs/Binding"
+          },
+          "to_input": {
+            "type": "string"
+          },
+          "to_node": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "from",
+          "to_node",
+          "to_input"
+        ],
+        "type": "object"
+      },
+      "FlowLimits": {
+        "additionalProperties": false,
+        "properties": {
+          "max_nodes": {
+            "default": 64,
+            "format": "uint",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "max_parallel_nodes": {
+            "default": 4,
+            "format": "uint",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "max_run_ms": {
+            "default": 120000,
+            "format": "uint64",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "NodeDefinition": {
+        "additionalProperties": false,
+        "properties": {
+          "bindings": {
+            "additionalProperties": {
+              "$ref": "#/$defs/Binding"
+            },
+            "default": {},
+            "type": "object"
+          },
+          "config": true,
+          "id": {
+            "type": "string"
+          },
+          "retry": {
+            "$ref": "#/$defs/RetryPolicy",
+            "default": {
+              "max_attempts": 0
+            }
+          },
+          "run_if": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/ConditionGuard"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "timeout_ms": {
+            "default": 30000,
+            "format": "uint64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "config"
+        ],
+        "type": "object"
+      },
+      "RetryPolicy": {
+        "additionalProperties": false,
+        "properties": {
+          "max_attempts": {
+            "default": 0,
+            "format": "uint8",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ValueType": {
+        "enum": [
+          "string",
+          "boolean",
+          "object"
+        ],
+        "type": "string"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "edges": {
+        "items": {
+          "$ref": "#/$defs/EdgeDefinition"
+        },
+        "type": "array"
+      },
+      "flow_id": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "inputs": {
+        "additionalProperties": {
+          "$ref": "#/$defs/ValueType"
+        },
+        "type": "object"
+      },
+      "limits": {
+        "$ref": "#/$defs/FlowLimits"
+      },
+      "nodes": {
+        "items": {
+          "$ref": "#/$defs/NodeDefinition"
+        },
+        "type": "array"
+      },
+      "outputs": {
+        "additionalProperties": {
+          "$ref": "#/$defs/Binding"
+        },
+        "type": "object"
+      },
+      "schema_version": {
+        "format": "uint32",
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "schema_version",
+      "flow_id",
+      "inputs",
+      "outputs",
+      "nodes",
+      "edges",
+      "limits"
+    ],
+    "title": "FlowDefinition",
+    "type": "object"
+  },
+  "node_catalog": {
+    "condition": {
+      "config": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "equals": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "equals"
+        ],
+        "title": "ConditionConfig",
+        "type": "object"
+      },
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "ConditionInput",
+        "type": "object"
+      },
+      "output": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "BooleanValue",
+        "type": "object"
+      }
+    },
+    "input": {
+      "config": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "InputConfig",
+        "type": "object"
+      },
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "title": "EmptyInput",
+        "type": "object"
+      },
+      "output": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "TextValue",
+        "type": "object"
+      }
+    },
+    "llm.chat": {
+      "config": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "credential_id": {
+            "default": null,
+            "format": "uuid",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "max_output_tokens": {
+            "format": "uint32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "max_prompt_bytes": {
+            "default": 16384,
+            "format": "uint32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "model_alias": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "model_alias",
+          "max_output_tokens"
+        ],
+        "title": "ChatConfig",
+        "type": "object"
+      },
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "prompt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "prompt"
+        ],
+        "title": "ChatInput",
+        "type": "object"
+      },
+      "output": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "TextValue",
+        "type": "object"
+      }
+    },
+    "output": {
+      "config": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "title": "OutputConfig",
+        "type": "object"
+      },
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "OutputInput",
+        "type": "object"
+      },
+      "output": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "TextValue",
+        "type": "object"
+      }
+    },
+    "prompt.render": {
+      "config": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "template": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "template"
+        ],
+        "title": "PromptConfig",
+        "type": "object"
+      },
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "question": {
+            "default": null,
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "PromptInput",
+        "type": "object"
+      },
+      "output": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "TextValue",
+        "type": "object"
+      }
+    },
+    "rag.retrieve": {
+      "config": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "top_k": {
+            "format": "uint8",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "top_k"
+        ],
+        "title": "RagConfig",
+        "type": "object"
+      },
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "title": "RagInput",
+        "type": "object"
+      },
+      "output": {
+        "$defs": {
+          "RagSource": {
+            "additionalProperties": false,
+            "properties": {
+              "chunk_id": {
+                "type": "string"
+              },
+              "dataset_id": {
+                "type": "string"
+              },
+              "document_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "dataset_id",
+              "document_id",
+              "chunk_id"
+            ],
+            "type": "object"
+          }
+        },
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/$defs/RagSource"
+            },
+            "type": "array"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value",
+          "context",
+          "sources"
+        ],
+        "title": "RagValue",
+        "type": "object"
+      }
+    },
+    "select": {
+      "config": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "title": "SelectConfig",
+        "type": "object"
+      },
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "condition": {
+            "type": "boolean"
+          },
+          "when_false": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "when_true": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "condition"
+        ],
+        "title": "SelectInput",
+        "type": "object"
+      },
+      "output": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "TextValue",
+        "type": "object"
+      }
+    },
+    "variable.get": {
+      "config": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "VariableConfig",
+        "type": "object"
+      },
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "title": "EmptyInput",
+        "type": "object"
+      },
+      "output": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "TextValue",
+        "type": "object"
+      }
+    },
+    "variable.set": {
+      "config": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "VariableConfig",
+        "type": "object"
+      },
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "OutputInput",
+        "type": "object"
+      },
+      "output": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "TextValue",
+        "type": "object"
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "flow_id": "22222222-2222-4222-8222-222222222222",
+  "inputs": { "message": "string" },
+  "outputs": { "reply": { "node": "reply", "output": "value" } },
+  "nodes": [
+    { "id": "message", "type": "input", "config": { "name": "message" }, "bindings": {}, "timeout_ms": 1000 },
+    { "id": "is_hello", "type": "condition", "config": { "equals": "hello" }, "bindings": { "text": { "node": "message", "output": "value" } }, "timeout_ms": 1000 },
+    { "id": "greeting", "type": "prompt.render", "config": { "template": "Hello! {{text}}" }, "bindings": { "text": { "node": "message", "output": "value" } }, "run_if": { "node": "is_hello", "equals": true }, "timeout_ms": 1000 },
+    { "id": "fallback", "type": "prompt.render", "config": { "template": "You said: {{text}}" }, "bindings": { "text": { "node": "message", "output": "value" } }, "run_if": { "node": "is_hello", "equals": false }, "timeout_ms": 1000 },
+    { "id": "chosen", "type": "select", "config": {}, "bindings": { "condition": { "node": "is_hello", "output": "value" }, "when_true": { "node": "greeting", "output": "value" }, "when_false": { "node": "fallback", "output": "value" } }, "timeout_ms": 1000 },
+    { "id": "reply", "type": "output", "config": {}, "bindings": { "value": { "node": "chosen", "output": "value" } }, "timeout_ms": 1000 }
+  ],
+  "edges": [
+    { "from": { "node": "message", "output": "value" }, "to_node": "is_hello", "to_input": "text" },
+    { "from": { "node": "message", "output": "value" }, "to_node": "greeting", "to_input": "text" },
+    { "from": { "node": "message", "output": "value" }, "to_node": "fallback", "to_input": "text" },
+    { "from": { "node": "is_hello", "output": "value" }, "to_node": "chosen", "to_input": "condition" },
+    { "from": { "node": "greeting", "output": "value" }, "to_node": "chosen", "to_input": "when_true" },
+    { "from": { "node": "fallback", "output": "value" }, "to_node": "chosen", "to_input": "when_false" },
+    { "from": { "node": "chosen", "output": "value" }, "to_node": "reply", "to_input": "value" }
+  ],
+  "limits": { "max_nodes": 16, "max_run_ms": 120000 }
+}
