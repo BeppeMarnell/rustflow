@@ -4,3 +4,5 @@
 /third_party/ragflow/docker/.env
 /third_party/ragflow/docker/ragflow-logs/
 .DS_Store
+/web/node_modules/
+/web/dist/

@@ -32,6 +32,6 @@ The worker rejects a model prompt whose UTF-8 byte length exceeds `max_prompt_by
 
 Set `run_if` on a node to `{ "node": "condition-node-id", "equals": true }` or `false`. A node whose guard does not match is checkpointed as `skipped`. The `select` node waits for both branch sources, then returns the selected branch's value. A skipped source is represented internally as `null`; selecting it fails the run. Guard dependencies participate in cycle validation. See [the conditional example](../examples/conditional-chat.json).
 
-## Editor decision
+## Workbench editor
 
-Use versioned JSON, schema validation, and the flow management API for the first release. A visual editor would have to explain bindings, guards, retries, and immutable published versions without hiding important behavior; the current API and timeline make these inspectable directly. Revisit an editor after observing repeated flow-authoring tasks that JSON and validation errors handle poorly.
+The local Svelte workbench visualizes nodes and bindings as a graph and exposes forms for every reviewed node type, binding, guard, retry policy, timeout, flow input, output, and limit. It derives `edges` from node bindings so the graph and JSON stay consistent. JSON mode allows direct inspection and import of the full definition. Validate or dry-run a draft before publishing; opening a published version makes a draft copy, and publishing always creates a new immutable version. See [Workbench usage](../web/README.md).

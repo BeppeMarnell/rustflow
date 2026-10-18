@@ -12,6 +12,8 @@ See [the feature documentation](docs/README.md) for architecture, flow definitio
 4. Check `GET /health/live` and `GET /health/ready`.
 5. Create a tenant and scoped keys with `scripts/local-bootstrap.sh my-tenant`. It saves the application, RAGFlow configuration, and Prometheus keys in ignored `.local/` files.
 
+For the local Svelte conversation and flow editor, run `cd web && npm ci && npm run dev`, then open `http://127.0.0.1:5173`. The development proxy reads `.local/api-key` on the server; the browser does not receive the key. See [Workbench usage](web/README.md).
+
 For the complete local Compose environment, run `scripts/full-compose.sh up`. It starts the pinned official RAGFlow stack, creates and indexes a smoke dataset, boots Chatflow and its supporting services, and verifies both a mock turn and a RAGFlow-backed turn. `scripts/full-compose.sh reset` removes both projects' containers, named volumes, and generated local keys; running `up` again recreates them. This reset deletes local Chatflow and RAGFlow data. See [container operation](docs/operations.md#containerized-local-api-and-worker).
 
 You can copy this repository to another machine without copying `.local/`, the local RAGFlow `docker/.env`, or Docker volumes. Install Docker with Compose 2.24.4 or newer, Bash, Python 3, and curl, then run `scripts/full-compose.sh up` from the new checkout. The startup script creates the local RAGFlow `docker/.env` from the checked-in `docker/.env.example`. The new machine still needs network access to pull container images and build the Rust image. See [moving the setup](docs/operations.md#moving-the-setup-to-another-machine).

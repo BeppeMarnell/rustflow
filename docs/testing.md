@@ -2,6 +2,8 @@
 
 `tests/conversation_variables.rs` covers variable persistence across turns, flow node reads and writes, isolation between conversations, and denial of access to a second key in the same tenant. It runs when `DATABASE_URL` points to Postgres and starts local API and worker processes.
 
+`tests/workbench_api.rs` covers conversation listing, run browsing, note validation and CRUD, same-tenant key isolation, cross-tenant isolation, and flow permission changes. It requires `DATABASE_URL`. In `web/`, run `npm ci`, `npm run check`, `npm test`, and `npm run build`; the TypeScript tests cover edge derivation, node-reference edits, JSON import bounds, and chunked SSE parsing.
+
 ## Compose rebuild check
 
 `scripts/full-compose.sh up` provisions the official RAGFlow stack and Chatflow application from empty volumes. It creates and parses a RAGFlow document, verifies retrieval, publishes deterministic mock and RAG flows, and asserts the worker returns the expected replies. `scripts/full-compose.sh reset` removes both Compose projects' named volumes and generated keys. The isolated rebuild check ran `reset` and `up` again, creating a new RAGFlow dataset and Chatflow tenant; both flows succeeded. For app-only checks, use `scripts/compose-environment.sh up|verify|reset` with separate `CHATFLOW_COMPOSE_PROJECT`, `CHATFLOW_STATE_DIR`, and port overrides listed in [operations](operations.md#containerized-local-api-and-worker). Use a dedicated Postgres database for Rust integration tests while a Compose worker is running, because the worker can claim jobs in the same database.

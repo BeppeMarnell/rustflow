@@ -19,11 +19,17 @@ All `/v1` endpoints require `Authorization: Bearer <application API key>`. Keys 
 | `POST /v1/api-keys/tokens/{public_id}/revoke` | `keys:write` | Revoke one token belonging to the authenticated key |
 | `GET /v1/ops/metrics` | `ops:read` | Tenant-scoped Prometheus metrics for backlog, failures, tokens, and optional estimated cost |
 | `POST /v1/runs` | `runs:write` | Create a conversation turn and queue its run |
+| `GET /v1/conversations` | `runs:read` | List the latest 100 accessible conversations for this key family |
+| `GET /v1/conversations/{conversation_id}/runs` | `runs:read` | List the latest 100 runs in one owned conversation |
 | `GET /v1/runs/{run_id}` | `runs:read` | Read status, pinned version, output, or error |
 | `POST /v1/runs/{run_id}/cancel` | `runs:write` | Cancel a queued or running run |
 | `GET /v1/runs/{run_id}/events` | `runs:read` | Stream ordered SSE events |
 | `GET /v1/runs/{run_id}/timeline` | `runs:read` | Read all durable events and node attempts |
 | `GET /v1/conversations/{conversation_id}/messages` | `runs:read` | Read stored messages |
+| `GET /v1/conversations/{conversation_id}/notes` | `runs:read` | List persisted notes in an owned conversation |
+| `POST /v1/conversations/{conversation_id}/notes` | `runs:write` | Add a note with `{"body":"..."}` |
+| `PATCH /v1/conversations/{conversation_id}/notes/{note_id}` | `runs:write` | Replace the note body |
+| `DELETE /v1/conversations/{conversation_id}/notes/{note_id}` | `runs:write` | Delete a note |
 | `GET /v1/conversations/{conversation_id}/variables` | `runs:read` | List the conversation's JSON variables |
 | `PUT /v1/conversations/{conversation_id}/variables/{name}` | `runs:write` | Set one JSON variable with `{"value": ...}` |
 | `DELETE /v1/conversations/{conversation_id}/variables/{name}` | `runs:write` | Remove one variable |
@@ -31,6 +37,8 @@ All `/v1` endpoints require `Authorization: Bearer <application API key>`. Keys 
 `POST /v1/runs` accepts `flow_version_id`, `input`, and optional `conversation_id`. The input fields and JSON types must match the published flow. The response returns `run_id`, `conversation_id`, `flow_version_id`, and initial status.
 
 A conversation can be continued, read, or updated only with its owner's key family and current flow permissions. A different key, even in the same tenant, receives HTTP 404 for the conversation, its variables, messages, and runs. Existing conversations created before ownership was recorded are assigned to their earliest run's API key when possible; rows without a known key are inaccessible through these endpoints. Variable names contain 1–64 ASCII letters, digits, or underscores. Each conversation supports up to 64 variables, each with a JSON value of at most 16 KiB. `GET` returns `{"conversation_id":"...","variables":{"name":value}}`; a missing conversation or variable returns HTTP 404. Variables persist across runs in that conversation and are absent from new conversations.
+
+The conversation browser excludes conversations containing any flow version the key may no longer read. A conversation's run list includes its version, status, input, output, error, and timestamps. Notes belong to the same tenant and conversation and remain available to rotated tokens of the owner key family. Note bodies must contain non-whitespace text and be at most 10,000 UTF-8 bytes. A missing note or a conversation owned by another key returns HTTP 404. Notes are intended for operator annotations, not provider secrets.
 
 `POST /v1/provider-credentials` accepts `{"provider_alias":"openai","secret_reference":"tenants/TENANT_UUID/openai"}` and returns `credential_id` and `provider_alias`. Write the provider key to Vault KV v2 before registration; the API accepts a reference only. The reference must start with the authenticated tenant's UUID path. Registering the same alias again rotates its reference while retaining the ID. Draft validation and publication reject an `openai` flow whose credential ID does not belong to that tenant and alias. Listing never returns the Vault reference or secret.
 
